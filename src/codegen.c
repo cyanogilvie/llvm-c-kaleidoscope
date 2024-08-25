@@ -141,7 +141,7 @@ LLVMValueRef kal_codegen_call(kal_ast_node *node, LLVMModuleRef module,
     }
     
     // Create call instruction.
-    return LLVMBuildCall(builder, func, args, arg_count, "calltmp");
+    return LLVMBuildCall2(builder, LLVMDoubleType(), func, args, arg_count, "calltmp");
 }
 
 

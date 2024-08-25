@@ -2,7 +2,10 @@
 # Variables
 ################################################################################
 
-CFLAGS=-g -Wall -Wextra -Wno-self-assign -std=c99
+CC=clang
+CXX=clang++
+
+CFLAGS=-g -Wall -Wextra -Wno-self-assign -std=gnu99
 CXXFLAGS=-g -Wall -Wextra -Wno-self-assign
 
 LEX_SOURCES=$(wildcard src/*.l) 
@@ -23,7 +26,7 @@ YACC?=bison
 YFLAGS?=-dv
 
 LLVM_CC_FLAGS=`llvm-config --cflags`
-LLVM_LINK_FLAGS=`llvm-config --libs --cflags --ldflags core analysis executionengine jit interpreter native`
+LLVM_LINK_FLAGS=`llvm-config --libs --cxxflags --ldflags core analysis executionengine mcjit interpreter native --system-libs`
 
 ################################################################################
 # Default Target

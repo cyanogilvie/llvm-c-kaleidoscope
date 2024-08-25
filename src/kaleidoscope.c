@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <llvm-c/ExecutionEngine.h>
 #include <llvm-c/Target.h>
-#include <llvm-c/Transforms/Scalar.h>
+#include <llvm-c/Transforms/PassBuilder.h>
 
 #include "ast.h"
 #include "parser.h"
@@ -22,7 +22,9 @@ int main(int argc, char **argv)
     LLVMExecutionEngineRef engine;
     
     LLVMInitializeNativeTarget();
-    LLVMLinkInJIT();
+    LLVMInitializeNativeAsmPrinter();
+    LLVMInitializeNativeAsmParser();
+    LLVMLinkInMCJIT();
 
     // Create execution engine.
     char *msg;
@@ -34,12 +36,14 @@ int main(int argc, char **argv)
     
     // Setup optimizations.
     LLVMPassManagerRef pass_manager =  LLVMCreateFunctionPassManagerForModule(module);
-    LLVMAddTargetData(LLVMGetExecutionEngineTargetData(engine), pass_manager);
+    // LLVMAddTargetData(LLVMGetExecutionEngineTargetData(engine), pass_manager);
+#if 0
     LLVMAddPromoteMemoryToRegisterPass(pass_manager);
     LLVMAddInstructionCombiningPass(pass_manager);
     LLVMAddReassociatePass(pass_manager);
     LLVMAddGVNPass(pass_manager);
     LLVMAddCFGSimplificationPass(pass_manager);
+#endif
     LLVMInitializeFunctionPassManager(pass_manager);
 
     // Main REPL loop.
