@@ -8,7 +8,7 @@ LLVM-C bindings. To build the tool, simply run:
 
 And then run the Kaleidoscope REPL:
 
-    $ bin/kaleidoscope
+    $ build/kaleidoscope
 
 Once the program has started, you can enter Kaleidoscope commands and see the
 results printed after each line.
